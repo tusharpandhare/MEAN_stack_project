@@ -1,0 +1,98 @@
+<div class="alert alert-warning w-50 justify-self-center " *ngIf='wronguser' role="alert">
+  Emails or password invallid
+</div>
+<div class="card bg-light">
+  <article class="card-body mx-auto">
+    <h1 class="text-center">Register </h1>
+    <p *ngIf="hidesingwithgoogle">
+      <button (click)="googleLogin()" class="btn btn-block btn-google bg-danger text-white"> <i class="fab fa-google"></i>   Login via Google</button>
+      <!-- <a href="" class="btn btn-block btn-facebook"> <i class="fab fa-facebook-f"></i>   Login via facebook</a> -->
+    </p>
+    <p *ngIf="hidesingwithgoogle" class="divider-text">
+          <span class="bg-light">OR</span>
+      </p>
+    <form  #regform = 'ngForm' (ngSubmit)="registerme(regform)">
+    <div class="form-group input-group">
+      <div class="input-group-prepend">
+          <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+       </div>
+          <input required name="pname" [(ngModel)]='name'  #pname='ngModel'  class="form-control" placeholder="Full name" type="text">
+      </div>
+      <div class="alert alert-danger" *ngIf='pname.touched && pname.invalid'>
+        This Field is required
+      </div>
+      <!-- form-group// -->
+      <div class="form-group input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+       </div>
+          <input required name="pusername" [(ngModel)]='email' #pusername = 'ngModel'
+          pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"
+          class="form-control" placeholder="Email address" type="email">
+      </div>
+      <div class="alert alert-danger" *ngIf='pusername.touched && pusername.invalid '>
+        This Field is required Vallid Email address
+      </div>
+      <!-- form-group// -->
+      <div class="form-group input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+      </div>
+      <select class="custom-select" style="max-width: 120px;">
+          <option selected="">+91</option>
+          <!-- <option value="1">+972</option> -->
+          <!-- <option value="2">+198</option> -->
+          <!-- <option value="3">+701</option> -->
+      </select>
+        <input required name="mobileno"  ngModel #mobileno = 'ngModel' maxlength="10" pattern="^[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$" class="form-control" placeholder="Phone number" type="text">
+
+      </div>
+      <div class="alert alert-danger" *ngIf='mobileno.touched && mobileno.invalid' >
+        This Field is required Vallid Mobile number of 10 Digits
+      </div>
+      <!-- form-group// -->
+      <div class="form-group input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"> <i class="fa fa-building"></i> </span>
+      </div>
+      <input required name="city" ngModel #city = 'ngModel' class="form-control" placeholder="City" type="text">
+    </div>
+    <div class="alert alert-danger" *ngIf='city.touched && city.invalid '>
+      This Field is required
+    </div>
+    <!-- form-group end.// -->
+      <div class="form-group input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+      </div>
+          <input required class="form-control " name="password" ngModel #password = 'ngModel'  placeholder="Create password" type="password">
+      </div>
+      <div class="alert alert-danger" *ngIf='password.touched && password.invalid'>
+        This Field is required
+      </div>
+      <!-- form-group// -->
+      <!-- <div class="form-group input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+      </div>
+          <input required name="cpassword"  class="form-control cpassword" placeholder="Repeat password" type="password">
+      </div>
+      <div class="alert alert-danger" *ngIf='cpassword.touched && cpassword.invalid && (password.value === cpassword.value)'>
+        This Field is required and Need to Be Matched with password Fields
+      </div> -->
+      <!-- form-group// -->
+      <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-block" [disabled]='regform.invalid' > Create Account  </button>
+          <!-- <input type="submit" value="Create Account"> -->
+      </div> <!-- form-group// -->
+      <p class="text-center">Have an account? <a routerLink="/guestlogin">Log In</a> </p>
+  </form>
+  </article>
+  </div> <!-- card.// -->
+
+  <!-- </div> -->
+  <!--container end.//-->
+
+
+
+

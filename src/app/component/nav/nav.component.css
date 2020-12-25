@@ -1,0 +1,25 @@
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 200px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.mat-nav-list{
+  overflow-y: hidden;
+  scrollbar-color: blue;
+  scroll-margin-top: 10%;
+}
+.mat-list-base .mat-list-item {
+  font-size: 12px;
+}

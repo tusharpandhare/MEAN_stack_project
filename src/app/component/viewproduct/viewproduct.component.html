@@ -1,0 +1,85 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-lg-5  p-2">
+      <!-- inmage array -->
+      <div class=" row justify-content-center ">
+        <div class="col-2 bg-white p-0 "  *ngIf="product.images[0]" (click)="setimage(0)" >
+          <img [src]="product.images[0]" alt="image not found"  class="img-fluid img"  >
+        </div>
+        <div class="col-2 bg-white p-0" *ngIf="product.images[1]" (click)="setimage(1)" >
+          <img [src]="product.images[1]" alt="image not found"  class="img-fluid img"  >
+        </div>
+        <div class="col-2 bg-white " *ngIf="product.images[2]" (click)="setimage(2)">
+          <img [src]="product.images[2]" alt="image not found"  class="img-fluid img"  >
+        </div>
+        <div class="col-2 bg-white " *ngIf="product.images[3]" (click)="setimage(3)">
+          <img [src]="product.images[3]" alt="image not found"  class="img-fluid img"  >
+        </div>
+
+      </div>
+      <!-- Zoomed image -->
+      <div class="row col-12 p-2 main_image justify-content-center" style="max-height: 350px; ;">
+       <img [src]="imgid" alt="main image" width="50%" class="img-fluid main_image" height="auto" style="object-fit: contain;">
+      </div>
+    </div>
+    <div class="col-12 col-lg-7 pt-3 ">
+      <!-- product name, price, rating, and heighlight -->
+      <h2>{{product.product_name}}</h2>
+      <div>
+        <h1 class="d-inline-block">Rs.  {{discount}}</h1>
+        <h2 class="text-muted d-inline-block pl-5" ><s>Rs{{product.product_price}}</s></h2>
+        <p class="h1 d-inline-block text-success pl-5">{{product.product_disc}}% off</p>
+      </div>
+      <hr>
+      <ngb-rating [rate]="product.product_rating"></ngb-rating>
+      <hr>
+      <div>
+        <h4 class="text-muted">Highlights</h4>
+        <ul class="pl-5">
+          <li *ngFor="let i of product.heighlight" class="text-muted">{{i}}</li>
+        </ul>
+      </div>
+      <div class="container-fluid row justify-content-center" *ngIf="isadmin=='client'">
+        <div class="col-6">
+          <button type="button" class="btn btn-success w-100" (click)="addtocart(product._id)">ADD TO CART</button>
+        </div>
+
+
+        <div class="col-6">
+        <button type="button" class="btn btn-success w-100" (click)="buyproduct()">BUY NOW</button>
+
+        </div>
+
+    </div>
+    <!-- back to admin -->
+    <div class="container-fluid row justify-content-center" *ngIf="isadmin=='admin'">
+      <div class="col-4">
+        <button type="button" class="btn btn-success w-100" (click)="adminpage()">BACK TO ADMIN</button>
+      </div>
+
+  </div>
+
+  <!-- offers -->
+  <div class="offer">
+    <h4 class="">Offers Available :</h4>
+    <ul class="pl-5">
+      <li *ngFor="let i of product.offers" class="text-muted"><mat-icon class="text-success">loyalty</mat-icon>&nbsp;&nbsp;{{i}}</li>
+    </ul>
+  </div>
+<!-- general info -->
+  <div class="offer">
+    <h4 class="h4">GENERAL INFORMATION:</h4>
+    <dl>
+      <dt class="text-muted">In The Box</dt>
+      <dd class="pl-5">{{product.general.inbox}}</dd>
+      <dt class="text-muted">Model Number</dt>
+      <dd class="pl-5">{{product.general.modelnum}}</dd>
+      <dt class="text-muted">Model Name</dt>
+      <dd class="pl-5">{{product.general.modelname}}</dd>
+      <dt class="text-muted">Colors</dt>
+      <dd class="pl-5">{{product.general.color}}</dd>
+    </dl>
+  </div>
+
+  </div>
+</div>

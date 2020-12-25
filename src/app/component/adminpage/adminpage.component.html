@@ -1,0 +1,239 @@
+
+<mat-tab-group>
+  <!-- items table starts -->
+  <mat-tab label="item list">
+    <br><br>
+    <input [(ngModel)]="searchText" placeholder="Search.." class="advancedSearchTextbox w-100">
+    <br><br>
+ <div class="table-responsive">
+  <table class="table table-bordered table-striped" #myTable id="myTable">
+    <thead class="bg-primary">
+      <tr class="text-white " >
+        <th  scope="col">Id</th>
+        <th scope="col">Category</th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+
+      </tr>
+    </thead>
+
+     <tbody class="bg-white">
+      <tr *ngFor="let row of products |  searchpipe: {_id: searchText, p_cat:searchText,  product_name: searchText};">
+        <td scope="row" class="text-primary">{{row._id}}</td>
+        <td class="text-primary">{{row.p_cat}}</td>
+        <td class="text-primary">{{row.product_name}}</td>
+        <td class="text-center"><button class="border-0 text-primary w-100" (click)="viewitem($event,row._id)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+          <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+          <path fill-rule="evenodd" d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+        </svg> View</button></td>
+      </tr>
+     </tbody>
+
+</table>
+ </div>
+
+
+
+
+
+
+
+
+
+
+
+  </mat-tab>
+  <!-- items table ends -->
+  <!-- add item tab starts -->
+  <mat-tab label="Add Item">
+
+    <div class="container row justify-content-center">
+      <mat-form-field appearance="fill">
+        <mat-label>Select Items Category</mat-label>
+        <select matNativeControl id="mySelectId" (change)='selectchangehandler($event)'>
+          <option value="" disabled selected></option>
+          <option value="mobile"><a href="">Mobile & Accessories</a></option>
+          <option value="smartware"><a href=""> Smart Ware & Health Care  </a></option>
+          <option value="laptop">Laptops & Tablets</option>
+          <option value="gaming">Gaming Accessories</option>
+          <option value="computer"><a href="">Computer & Accessories</a></option>
+          <option value="speakers"><a href="">Speakers</a></option>
+          <option value="smarthome"><a href="">Smart Home Automation</a></option>
+          <option value="camera"><a href="">Camera & Accessories</a></option>
+          <option value="network"><a href="">Network Component</a></option>
+          <option value="featured"><a href="">Featured Accessories</a></option>
+
+
+
+
+        </select>
+
+
+      </mat-form-field>
+    </div>
+    <div  [style.display]="formdiv" class="container row justify-content-center">
+
+      <!-- product highlight -->
+
+      <div class="wrapper" >
+        <div class="highlight_list" *ngIf="highlights" style="position: relative; left: 50%; transform: translate(-50%);">
+         <ul style="list-style-type: none; justify-content: center;">
+           <li *ngFor="let i of highlights" >
+             <mat-form-field appearance="fill" style="position: relative; left: 50%; transform: translate(-50%);" >
+               <!-- <mat-label>Product Highlight</mat-label> -->
+               <input matInput disabled type="text" #highlightitem name="highlightitem" [value]=i>
+               <!-- <button></button> -->
+               <button mat-icon-button matSuffix color="primary" (click)="removehighlight(highlightitem.value)" >
+               <mat-icon>clear</mat-icon>
+               </button>
+               <!-- <button (click)="addhighlight(highlight)">add</button> -->
+             </mat-form-field>
+           </li>
+         </ul>
+
+
+        </div>
+       <mat-form-field appearance="fill"style="position: relative; left: 50%; transform: translate(-50%);" >
+         <mat-label>Product Highlight</mat-label>
+         <input matInput type="text" #highlight name="highlight" onfocus="this.value=''">
+         <!-- <button></button> -->
+         <button mat-icon-button matSuffix color="primary" (click)="addhighlight(highlight.value)" >
+         <mat-icon>add</mat-icon>
+         </button>
+         <!-- <button (click)="addhighlight(highlight)">add</button> -->
+       </mat-form-field>
+      </div>
+
+      <!-- adding product image -->
+      <div class="wrapper" >
+        <div class="highlight_list" *ngIf="images" style="position: relative; left: 50%; transform: translate(-50%);">
+         <ul style="list-style-type: none; justify-content: center;">
+           <li *ngFor="let i of images" >
+             <mat-form-field appearance="fill" style="position: relative; left: 50%; transform: translate(-50%);" >
+               <!-- <mat-label>Product Highlight</mat-label> -->
+               <input matInput disabled type="text" #imageitem name="imageitem" [value]=i >
+               <!-- <button></button> -->
+               <button mat-icon-button matSuffix color="primary" (click)="removeimage(imageitem.value)" >
+               <mat-icon>clear</mat-icon>
+               </button>
+               <!-- <button (click)="addhighlight(highlight)">add</button> -->
+             </mat-form-field>
+           </li>
+         </ul>
+
+
+        </div>
+       <mat-form-field appearance="fill"style="position: relative; left: 50%; transform: translate(-50%);" >
+         <mat-label>Product Image</mat-label>
+         <input matInput type="text" #image name="image" onfocus="this.value=''">
+         <!-- <button></button> -->
+         <button mat-icon-button matSuffix color="primary" (click)="addimage(image)" >
+         <mat-icon>add</mat-icon>
+         </button>
+         <!-- <button (click)="addhighlight(highlight)">add</button> -->
+       </mat-form-field>
+      </div>
+
+      <form class="content_form text-center" #items='ngForm' (ngSubmit)="additem(items)">
+
+        <mat-form-field appearance="fill" class="d-none" >
+          <mat-label>Category</mat-label>
+          <input class="d-none" matInput name="p_cat"  [(ngModel)]="category" #p_cat="ngModel" class="form-control" required placeholder="EX: Realme Narzo 20 (Victory Blue, 64 GB)  (4 GB RAM)" type="text">
+          <!-- <mat-error *ngIf="p_name.touched && p_name.invalid">This Field Required</mat-error> -->
+        </mat-form-field><br>
+          <br>
+
+
+
+      <mat-form-field appearance="fill">
+        <mat-label>Product Name</mat-label>
+        <input matInput name="product_name" ngModel #p_name="ngModel" class="form-control" required placeholder="EX: Realme Narzo 20 (Victory Blue, 64 GB)  (4 GB RAM)" type="text">
+        <mat-error *ngIf="p_name.touched && p_name.invalid">This Field Required</mat-error>
+      </mat-form-field><br>
+      <mat-form-field appearance="fill">
+        <mat-label>Product Rating</mat-label>
+        <input matInput name="product_rating" pattern="^[0.0-5.0]" ngModel #p_rat="ngModel" class="form-control" maxlength="1" max="5" min="0" required  type="number">
+        <mat-error *ngIf="p_rat.touched && p_rat.invalid">This Field Required Number from 0-5</mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Product Price</mat-label>
+        <input matInput type="number" name="product_price"  ngModel #p_price="ngModel" class="form-control"  required class="example-right-align">
+          <span matPrefix>Rs &nbsp;</span>
+          <span matSuffix>.00</span>
+        <!-- <input matInput name="product_price"  ngModel #p_price="ngModel" class="form-control"  required  type="number"> -->
+        <mat-error *ngIf="p_price.touched && p_price.invalid">This Field Required </mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Product Price Discount</mat-label>
+        <input matInput type="number" name="product_disc" pattern="^([0-9]|[1-9][0-9]|100)"  ngModel #p_disc="ngModel" class="form-control"  required class="example-right-align">
+          <!-- <span matPrefix>Rs &nbsp;</span> -->
+          <span matSuffix>%</span>
+        <!-- <input matInput name="product_price"  ngModel #p_price="ngModel" class="form-control"  required  type="number"> -->
+        <mat-error *ngIf="p_disc.touched && p_disc.invalid">This Field Required Number from 0-100</mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field class="example-chip-list">
+        <mat-label>Offers</mat-label>
+        <mat-chip-list #chipList aria-label="Fruit selection">
+          <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable"
+                   [removable]="removable" (removed)="remove(fruit)">
+            {{fruit.name}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input name="offer" placeholder="Add Offers..."
+                 [matChipInputFor]="chipList"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 [matChipInputAddOnBlur]="addOnBlur"
+                 (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+      </mat-form-field><br>
+        <br>
+        <!-- </form> -->
+
+
+
+
+      <fieldset>
+        <legend>General</legend>
+
+         <!-- product general information -->
+         <div class="form-group" ngModelGroup="general">
+          <mat-form-field appearance="fill">
+            <mat-label>In The Box</mat-label>
+            <input matInput name="inbox" ngModel #inbox="ngModel" class="form-control" required placeholder="EX: Realme Narzo 20 (Victory Blue, 64 GB)  (4 GB RAM)" type="text">
+            <mat-error *ngIf="inbox.touched && inbox.invalid">This Field Required</mat-error>
+          </mat-form-field><br>
+          <mat-form-field appearance="fill">
+            <mat-label>Model Number</mat-label>
+            <input matInput name="modelnum" ngModel #modelnum="ngModel" class="form-control" required placeholder="EX: Realme Narzo 20 (Victory Blue, 64 GB)  (4 GB RAM)" type="text">
+            <mat-error *ngIf="modelnum.touched && modelnum.invalid">This Field Required</mat-error>
+          </mat-form-field><br>
+          <mat-form-field appearance="fill">
+            <mat-label>Model Name</mat-label>
+            <input matInput name="modelname" ngModel #modelname="ngModel" class="form-control" required placeholder="EX: Realme Narzo 20 (Victory Blue, 64 GB)  (4 GB RAM)" type="text">
+            <mat-error *ngIf="modelname.touched && modelname.invalid">This Field Required</mat-error>
+          </mat-form-field><br>
+          <mat-form-field appearance="fill">
+            <mat-label>Product Color</mat-label>
+            <input matInput name="color" ngModel #color="ngModel" class="form-control" required placeholder="EX: Realme Narzo 20 (Victory Blue, 64 GB)  (4 GB RAM)" type="text">
+            <mat-error *ngIf="color.touched && color.invalid">This Field Required</mat-error>
+          </mat-form-field><br>
+         </div>
+
+      </fieldset>
+
+      <input type="reset" value="Reset" class="btn btn-primary pr-2 pl-2 mr-2 ">
+      <input class="btn btn-primary" [disabled]='items.invalid' type="submit" value="Add Item">
+      <!-- <button  type="submit" class="btn btn-primary" [disabled]='items.invalid' > Create Account  </button> -->
+      </form>
+    </div>
+
+
+  </mat-tab>
+  <!-- <mat-tab label="Third"> Content 3 </mat-tab> -->
+</mat-tab-group>
+
+
+

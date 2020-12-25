@@ -1,0 +1,29 @@
+<!-- Default form login -->
+<form class="text-center border border-light p-5" #adminlogin = "ngForm" (ngSubmit)="adminlog(adminlogin)">
+
+  <p class="h4 mb-4">Admin Login</p>
+
+  <!-- Email -->
+  <input type="email"  name="adminusername" [(ngModel)]='adminuser' #adminusername='ngModel' id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail" value="admin@gmail.com">
+
+  <!-- Password -->
+  <input type="password"  name="adminpassword" [(ngModel)]='adminpass' #adminpassword='ngModel' id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password" value="admin">
+
+  <div class="d-flex justify-content-around">
+      <div>
+          <!-- Remember me -->
+          <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember">
+              <label class="custom-control-label" for="defaultLoginFormRemember">Remember me</label>
+          </div>
+      </div>
+
+  </div>
+
+  <!-- Sign in button -->
+  <button class="btn btn-info btn-block my-4" type="submit">Sign up</button>
+
+
+</form>
+<!-- Default form login -->
+

@@ -1,0 +1,66 @@
+<div class="justify-content-center" *ngIf="newcart">
+  <h2 class="text-success">Add Item To Cart</h2>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Item</th>
+          <th scope="col">Price</th>
+          <th scope="col">#</th>
+          <th scope="col">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td scope="row">
+            <img [src]="product.images[0]" alt="Image" class="img-fluid" width="30px">
+          </td>
+          <td class="col-2 text-truncate">{{product.product_name}}</td>
+          <td>{{discount}}</td>
+          <td>
+            <button *ngIf="count>1" (click)="minuscount()">-</button>
+            <input type="text" width="20" [value]="count" disabled style="width: min-content;">
+            <button (click)="pluscount()">+</button>
+          </td>
+          <td>{{discount * count}}</td>
+        </tr>
+    </table>
+  </div>
+  <button class="btn btn-primary mr-3" (click)="cancel()" >Cancel</button>
+  <button class="btn btn-primary" (click)="savecart(product.images[0],product.product_name,
+  discount)">Add Cart</button>
+</div>
+
+<!-- view cart -->
+<div class="justify-content-ceter" *ngIf="showcart">
+  <h2 class="text-success">Yours Cart</h2>
+
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Item</th>
+          <th scope="col">Number</th>
+          <th scope="col">Price</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of products">
+          <td scope="row">
+            <img [src]="item.image" alt="Image" class="img-fluid" width="50px">
+          </td>
+          <!-- <td class="col-2 text-truncate">{{item.name}}</td> -->
+          <td>{{item.itemno}}</td>
+          <td>
+           {{item.itemno * item.price}}
+          </td>
+          <td><button class="btn btn-primary" (click)="deletecartitem(item._id)">Remove</button></td>
+        </tr>
+    </table>
+  </div>
+  <button class="btn btn-success" (click)="ordercart()" *ngIf="products">Order Cart Now</button>
+
+</div>
